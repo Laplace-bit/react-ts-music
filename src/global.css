@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-family: sans-serif;
+  /* 默认字体 */
+  font-size: 100%;
+  /* 在用户调整窗口大小时，字体大小做相应调整。 */
+  -ms-text-size-adjust: 100%;
+  /* IE浏览器 */
+  -webkit-text-size-adjust: 100%;
+  /* FireFox浏览器 */
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#root {
+  height: 100%;
+}
+
+.ant-layout {
+  height: 100%;
+}
