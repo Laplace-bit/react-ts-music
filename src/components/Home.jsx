@@ -1,11 +1,8 @@
-import React from "react";
-
-
 
 function Home() {
     return (
         <div>
-            Hossme
+            wellcome to home
         </div>
     );
 }
