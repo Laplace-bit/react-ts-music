@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 function DiyMenu(props: any) {
 
     const navigate = useNavigate();
-    const { isDark } = props;
+    // const { isDark } = props;
 
     /**
      * 路由跳转
@@ -24,7 +24,7 @@ function DiyMenu(props: any) {
 
     return (
         <Menu
-            theme={isDark ? 'dark' : 'light'}
+            // theme={isDark ? 'dark' : 'light'}
             // mode="inline"
             // defaultSelectedKeys={['/home']}
             onClick={routerHandle}

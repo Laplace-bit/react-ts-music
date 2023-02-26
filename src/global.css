@@ -32,10 +32,6 @@ code {
     monospace;
 }
 
-#root {
-  height: 100%;
-}
-
-.ant-layout {
+#root ,.ant-layout ,.ant-app {
   height: 100%;
 }
