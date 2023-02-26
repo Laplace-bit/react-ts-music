@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+import MusicList from './list/MusicList';
 
 const Music: React.FC = () => {
 
@@ -9,6 +9,7 @@ const Music: React.FC = () => {
 
     return (
         <div>
+            <MusicList></MusicList>
             listen some music
         </div>
     );
