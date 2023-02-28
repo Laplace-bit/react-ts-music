@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Divider, List, Skeleton } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import "./musicList.less"
+import "./musicList.scss"
 
 interface DataType {
     gender: string;
@@ -47,7 +47,6 @@ const MusicList: React.FC = () => {
         <div
             id="scrollableDiv"
             style={{
-                height: 400,
                 overflow: 'auto',
                 padding: '0 16px',
                 border: '1px solid rgba(140, 140, 140, 0.35)',

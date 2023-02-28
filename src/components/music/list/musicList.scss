@@ -1,0 +1,6 @@
+#scrollableDiv{
+    height: 100% !important;
+}
+#scrollableDiv::-webkit-scrollbar{
+    display: none;
+}

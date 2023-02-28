@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import MusicList from './list/MusicList';
+import SearchBar from './search/SearchBar';
+import "./music.scss"
 
 const Music: React.FC = () => {
 
@@ -8,8 +10,14 @@ const Music: React.FC = () => {
     })
 
     return (
-        <div>
-            <MusicList></MusicList>
+        <div style={{
+            height: '100%'
+        }}>
+            <div className='side-box'>
+                <SearchBar></SearchBar>
+                <MusicList></MusicList>
+
+            </div>
             listen some music
         </div>
     );
