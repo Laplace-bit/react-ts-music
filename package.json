@@ -17,6 +17,7 @@
     "@types/react-router-dom": "^5.3.3",
     "antd": "^5.2.2",
     "antd-theme-generator": "^1.2.11",
+    "axios": "^0.21.1",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",
