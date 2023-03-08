@@ -2,21 +2,46 @@ import React, { useEffect, useState } from 'react';
 import { Avatar, Divider, List, Skeleton } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import "./musicList.scss"
+import { getNewSongs } from '../../../api/songRequest';
+
 
 interface DataType {
-    gender: string;
-    name: {
-        title: string;
-        first: string;
-        last: string;
-    };
-    email: string;
-    picture: {
-        large: string;
-        medium: string;
-        thumbnail: string;
-    };
-    nat: string;
+    alg: string;
+    canDislike: boolean;
+    copywriter: any;
+    id: number;
+    name: string;
+    picUrl: string;
+    song: {
+        subType: string;
+        name: string;
+        id: number;
+        position: number;
+        alias: Array<any>;
+        status: 0;
+        album: any;
+        audition: null
+        bMusic: any;
+        commentThreadId: "R_SO_4_2026211286"
+        copyFrom: ""
+        copyright: 1
+        copyrightId: 7001
+        crbt: null
+        dayPlays: 0
+        disc: "01"
+        duration: 180688
+        exclusive: false
+        fee: 8
+        ftype: 0
+        hearTime: 0
+        hrMusic: null
+        mark: 0
+        mp3Url: null
+        mvid: 0
+
+    }
+    trackNumberUpdateTime: null;
+    type: number;
 }
 
 const MusicList: React.FC = () => {
@@ -28,10 +53,11 @@ const MusicList: React.FC = () => {
             return;
         }
         setLoading(true);
-        fetch('https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo')
-            .then((res) => res.json())
+        getNewSongs()
+            .then((res) => res)
             .then((body) => {
-                setData([...data, ...body.results]);
+                console.log(">>>", body.result)
+                setData([...data, ...body.result]);
                 setLoading(false);
             })
             .catch(() => {
@@ -63,13 +89,12 @@ const MusicList: React.FC = () => {
                 <List
                     dataSource={data}
                     renderItem={(item) => (
-                        <List.Item key={item.email}>
+                        <List.Item key={item.picUrl}>
                             <List.Item.Meta
-                                avatar={<Avatar src={item.picture.large} />}
-                                title={<a href="https://ant.design">{item.name.last}</a>}
-                                description={item.email}
+                                avatar={<Avatar src={item.picUrl} />}
+                                title={item.name}
+                                description={item.song.album.company + "-" + item.song.album.subType}
                             />
-                            <div>Content</div>
                         </List.Item>
                     )}
                 />
