@@ -3,6 +3,8 @@ import { Avatar, Divider, List, Skeleton } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import "./musicList.less"
 import { getNewSongs } from '../../../api/songRequest';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { songChange } from '../../../store/features/song-slice';
 
 
 interface DataType {
@@ -48,6 +50,13 @@ const MusicList: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState<DataType[]>([]);
 
+ 
+    const dispatch = useAppDispatch();
+
+    function handleSongChange(id:number) {
+        dispatch(songChange(id))
+    }
+
     const loadMoreData = () => {
         if (loading) {
             return;
@@ -89,7 +98,8 @@ const MusicList: React.FC = () => {
                 <List
                     dataSource={data}
                     renderItem={(item) => (
-                        <List.Item key={item.picUrl}>
+                        <List.Item key={item.picUrl}
+                            onClick={()=>handleSongChange(item.id)}>
                             <List.Item.Meta
                                 avatar={<Avatar src={item.picUrl} />}
                                 title={item.name}

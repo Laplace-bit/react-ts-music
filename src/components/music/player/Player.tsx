@@ -1,18 +1,37 @@
-import React from 'react'
-import ReactPlayer from 'react-player'
-
+import React, { useEffect, useState } from 'react'
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
+import { getSongUrl } from '../../../api/songRequest';
+import { useAppSelector } from '../../../store/hooks';
 
 
 const Player: React.FC = () => {
+    const song = useAppSelector((state) => state.song.id);
+    const [songUrl, setSongUrl] = useState("");
 
+    const songPlay = async (song: number) => {
+        getSongUrl(song).then((res) => res)
+            .then((body) => {
+                console.log(body)
+                const currId = body.data.find(item => item.id === song);
+                currId && setSongUrl(currId.url);
+            })
+            .catch((error) => {
+                console.error(error)
+            });
+    }
+
+    useEffect(() => {
+        songPlay(song)
+    }, [song]);
 
     return (
         <div id="player" >
-            <ReactPlayer
+            <AudioPlayer
                 className='react-player'
-                url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
-                width='100%'
-                height='100%'
+                autoPlay
+                src={songUrl}
+                onPlay={e => console.log("onPlay")}
             />
         </div>
     );

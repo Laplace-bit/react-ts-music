@@ -12,14 +12,14 @@ const Music: React.FC = () => {
     })
 
     return (
-        <div style={{
-            height: '100%'
-        }}>
+        <div
+            className='container'
+           >
             <div className='side-box'>
                 <SearchBar></SearchBar>
                 <MusicList></MusicList>
             </div>
-            <div>
+            <div className='player-box'>
                 <Player></Player>
             </div>
 
