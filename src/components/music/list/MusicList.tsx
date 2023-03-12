@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Divider, List, Skeleton } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import "./musicList.scss"
+import "./musicList.less"
 import { getNewSongs } from '../../../api/songRequest';
 
 
