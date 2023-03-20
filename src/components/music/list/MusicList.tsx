@@ -5,58 +5,23 @@ import "./musicList.less"
 import { getNewSongs } from '../../../api/songRequest';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { songChange } from '../../../store/features/song-slice';
+import { loadSongList } from '../../../store/features/songlist-slice';
 
-
-interface DataType {
-    alg: string;
-    canDislike: boolean;
-    copywriter: any;
-    id: number;
-    name: string;
-    picUrl: string;
-    song: {
-        subType: string;
-        name: string;
-        id: number;
-        position: number;
-        alias: Array<any>;
-        status: 0;
-        album: any;
-        audition: null
-        bMusic: any;
-        commentThreadId: "R_SO_4_2026211286"
-        copyFrom: ""
-        copyright: 1
-        copyrightId: 7001
-        crbt: null
-        dayPlays: 0
-        disc: "01"
-        duration: 180688
-        exclusive: false
-        fee: 8
-        ftype: 0
-        hearTime: 0
-        hrMusic: null
-        mark: 0
-        mp3Url: null
-        mvid: 0
-
-    }
-    trackNumberUpdateTime: null;
-    type: number;
-}
 
 const MusicList: React.FC = () => {
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState<DataType[]>([]);
+    const data = useAppSelector((state) => state.songlist.list);
 
- 
     const dispatch = useAppDispatch();
-
-    function handleSongChange(id:number) {
+    /**
+     * 点击歌曲变更id
+     */
+    function handleSongChange(id: number) {
         dispatch(songChange(id))
     }
-
+    /**
+     * 加载更多歌曲
+     */
     const loadMoreData = () => {
         if (loading) {
             return;
@@ -65,8 +30,9 @@ const MusicList: React.FC = () => {
         getNewSongs()
             .then((res) => res)
             .then((body) => {
+                // 保存到redux
+                dispatch(loadSongList(body.result))
                 console.log(">>>", body.result)
-                setData([...data, ...body.result]);
                 setLoading(false);
             })
             .catch(() => {
@@ -99,7 +65,7 @@ const MusicList: React.FC = () => {
                     dataSource={data}
                     renderItem={(item) => (
                         <List.Item key={item.picUrl}
-                            onClick={()=>handleSongChange(item.id)}>
+                            onClick={() => handleSongChange(item.id)}>
                             <List.Item.Meta
                                 avatar={<Avatar src={item.picUrl} />}
                                 title={item.name}

@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { type SongState } from "./types/songsType"
 
-
-interface SongState {
-    id: number,
-
-}
 
 const initialSong: SongState = {
     id: 11111
