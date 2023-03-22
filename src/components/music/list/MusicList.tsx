@@ -1,11 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Avatar, Divider, List, Skeleton } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import "./musicList.less"
-import { getNewSongs } from '../../../api/songRequest';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { songChange } from '../../../store/features/song-slice';
-import { loadSongList } from '../../../store/features/songlist-slice';
+import "@/components/music/list/musicList.less"
+import { getNewSongs } from '@/api/songRequest';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { songChange } from '@/store/features/song-slice';
+import { loadSongList } from '@/store/features/songlist-slice';
 
 
 const MusicList: React.FC = () => {

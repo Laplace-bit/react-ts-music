@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import MusicList from './list/MusicList';
-import SearchBar from './search/SearchBar';
-import "./music.less"
-import Player from './player/Player';
+import MusicList from '@/components/music/list/MusicList';
+import SearchBar from '@/components/music/search/SearchBar';
+import "@/components/music/music.less"
+import Player from '@/components/music/player/Player';
 
 
 const Music: React.FC = () => {
@@ -14,7 +14,7 @@ const Music: React.FC = () => {
     return (
         <div
             className='container'
-           >
+        >
             <div className='side-box'>
                 <SearchBar></SearchBar>
                 <MusicList></MusicList>

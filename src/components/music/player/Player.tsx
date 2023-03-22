@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import { getSongUrl } from '../../../api/songRequest';
-import { useAppSelector } from '../../../store/hooks';
+import { getSongUrl } from '@/api/songRequest';
+import { useAppSelector } from '@/store/hooks';
 
 
 const Player: React.FC = () => {

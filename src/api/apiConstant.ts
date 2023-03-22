@@ -1,4 +1,3 @@
-import { Interface } from "readline";
 
 /**
  * @description: 所有的接口列表
@@ -22,7 +21,7 @@ export type apiKeyType = keyof typeof apiList;
 
 
 interface songDetail {
-    id:number
+    id: number
     url: string
 }
 /**
