@@ -16,9 +16,12 @@ const songlistSlice = createSlice({
         loadSongList(state, actions: PayloadAction<SongListState[]>) {
             state.list.push(...actions.payload);
         },
+        resetList(state) {
+            state.list = [];
+        },
     }
 })
 
-export const { loadSongList } = songlistSlice.actions;
+export const { loadSongList, resetList } = songlistSlice.actions;
 
 export default songlistSlice.reducer;

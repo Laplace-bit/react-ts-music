@@ -1,40 +1,19 @@
 // 列表
 export interface SongListState {
-    alg: string;
-    canDislike: boolean;
-    copywriter: any;
-    id: number;
-    name: string;
-    picUrl: string;
-    song: {
-        subType: string;
-        name: string;
-        id: number;
-        position: number;
-        alias: Array<any>;
-        status: number;
-        album: any;
-        audition: null
-        bMusic: any;
-        commentThreadId: string
-        copyFrom: string
-        copyright: number
-        copyrightId: number
-        crbt: null
-        dayPlays: number
-        disc: string
-        duration: number
-        exclusive: false
-        fee: number
-        ftype: number
-        hrMusic: null
-        mark: number
-        mp3Url: null
-        mvid: number
-
+    id: number,
+    name: string,
+    picUrl: string,
+    desc: string,
+    al?: {
+        id: number
+        picUrl: string
     }
-    trackNumberUpdateTime: null;
-    type: number;
+    song?: {
+        name: string,
+        id: number,
+        album: any,
+        disc: string
+    }
 }
 
 // 当前播放id

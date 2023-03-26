@@ -7,12 +7,12 @@ import { getNewSongs } from '@/api/songRequest';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { songChange } from '@/store/features/song-slice';
 import { loadSongList } from '@/store/features/songlist-slice';
-
+import MusicFunc from '@/tools/musicFunc';
 
 const MusicList: React.FC = () => {
     const [loading, setLoading] = useState(false);
-    const data = useAppSelector((state) => state.songlist.list);
-
+    let data = useAppSelector((state) => state.songlist.list);
+    data = MusicFunc.uniqueObjectArray(data, "id");
     const dispatch = useAppDispatch();
     /**
      * 点击歌曲变更id
@@ -32,7 +32,7 @@ const MusicList: React.FC = () => {
             .then((res) => res)
             .then((body) => {
                 // 保存到redux
-                dispatch(loadSongList(body.result))
+                dispatch(loadSongList(MusicFunc.listHandler(body.result, 'newSong')))
                 console.log(">>>", body.result)
                 setLoading(false);
             })
@@ -57,7 +57,7 @@ const MusicList: React.FC = () => {
             <InfiniteScroll
                 dataLength={data.length}
                 next={loadMoreData}
-                hasMore={data.length < 50}
+                hasMore={data.length < 10}
                 loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
                 endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                 scrollableTarget="scrollableDiv"
@@ -70,7 +70,7 @@ const MusicList: React.FC = () => {
                             <List.Item.Meta
                                 avatar={<Avatar src={item.picUrl} />}
                                 title={item.name}
-                                description={item.song.album.company + "-" + item.song.album.subType}
+                                description={item.desc}
                             />
                         </List.Item>
                     )}
