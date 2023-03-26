@@ -19,6 +19,8 @@ export interface SongListState {
 // 当前播放id
 export interface SongState {
     id: number,
+    name: string,
+    singer?: string
 }
 
 

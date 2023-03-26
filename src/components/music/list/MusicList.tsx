@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { songChange } from '@/store/features/song-slice';
 import { loadSongList } from '@/store/features/songlist-slice';
 import MusicFunc from '@/tools/musicFunc';
+import { type SongListState } from "@/store/features/types/songsType";
 
 const MusicList: React.FC = () => {
     const [loading, setLoading] = useState(false);
@@ -17,8 +18,8 @@ const MusicList: React.FC = () => {
     /**
      * 点击歌曲变更id
      */
-    function handleSongChange(id: number) {
-        dispatch(songChange(id))
+    function handleSongChange(item: SongListState) {
+        dispatch(songChange({ id: item.id, name: item.name, singer: "" }))
     }
     /**
      * 加载更多歌曲
@@ -66,7 +67,7 @@ const MusicList: React.FC = () => {
                     dataSource={data}
                     renderItem={(item) => (
                         <List.Item key={item.picUrl}
-                            onClick={() => handleSongChange(item.id)}>
+                            onClick={() => handleSongChange(item)}>
                             <List.Item.Meta
                                 avatar={<Avatar src={item.picUrl} />}
                                 title={item.name}
