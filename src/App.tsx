@@ -3,16 +3,18 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
-import { Layout, theme, Select, ConfigProvider, Space, App as AntdApp } from 'antd';
+import { Layout, theme, Select, ConfigProvider, Space, App as AntdApp, message } from 'antd';
 import "./global.css"
 import DiyMenu from "./components/menu/DiyMenu";
 import ErrorBoundary from "./components/Error/index";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import routesList from "./router/routerConfig"
 const { Sider, Content } = Layout;
-
 const App: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+
+  const [messageApi, contextHolder] = message.useMessage();
+  window.$messageApi = messageApi;
 
   const themeOptions = useRef([
     { value: 'defaultAlgorithm', label: '默认模式', theme: theme.defaultAlgorithm },
@@ -43,6 +45,7 @@ const App: React.FC = () => {
           },
         }}
         >
+          {contextHolder}
           <AntdApp>
             <Layout>
               <Sider trigger={null} collapsible collapsedWidth='0' collapsed={collapsed}

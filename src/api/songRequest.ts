@@ -18,12 +18,13 @@ export const getSongUrl = async (id: number) => {
 }
 
 // 搜索音乐
-export const searchSong = async (keywords: string, limit: number = 30) => {
+export const searchSong = async (keywords: string, limit: number = 30, offset: number = 0) => {
     return await service({
         url: "cloudsearch",
         data: {
             keywords,
-            limit
+            limit,
+            offset,//分页
         }
     })
 }

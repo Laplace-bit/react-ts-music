@@ -4,7 +4,6 @@ import SearchBar from '@/components/music/search/SearchBar';
 import "@/components/music/music.less"
 import Player from '@/components/music/player/Player';
 
-
 const Music: React.FC = () => {
 
     useEffect(() => {

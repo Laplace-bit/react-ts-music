@@ -1,19 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { Avatar, Divider, List, Skeleton } from 'antd';
+import { Avatar, Divider, List, Skeleton, Spin } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import "@/components/music/list/musicList.less"
-import { getNewSongs } from '@/api/songRequest';
+import { getNewSongs, searchSong } from '@/api/songRequest';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { songChange } from '@/store/features/song-slice';
 import { loadSongList } from '@/store/features/songlist-slice';
 import MusicFunc from '@/tools/musicFunc';
 import { type SongListState } from "@/store/features/types/songsType";
+import useAsync from '@/hooks/useAsync';
 
 const MusicList: React.FC = () => {
-    const [loading, setLoading] = useState(false);
+    // 列表数据
     let data = useAppSelector((state) => state.songlist.list);
+    // 列表数量
+    const songCount = useAppSelector((state) => state.songlist.songCount);
+    // 搜索参数
+    const searchParams = useAppSelector((state) => state.songlist.searchParams);
+    // 列表类型
+    const listType = useAppSelector((state) => state.songlist.listType);
+    // 去重
     data = MusicFunc.uniqueObjectArray(data, "id");
+
     const dispatch = useAppDispatch();
     /**
      * 点击歌曲变更id
@@ -23,23 +32,39 @@ const MusicList: React.FC = () => {
     }
     /**
      * 加载更多歌曲
+     *
      */
-    const loadMoreData = () => {
-        if (loading) {
-            return;
+    const { sendHttp, isLoading, error } = useAsync()
+
+    const loadMoreData = async () => {
+        switch (listType) {
+            case "newSong":
+                sendHttp(
+                    getNewSongs()
+                        .then((body) => {
+                            // 保存到redux
+                            dispatch(loadSongList({ list: MusicFunc.listHandler(body.result, 'newSong'), listType: "newSong" }))
+                        })
+                )
+                break;
+            case "searchSong":
+                const { keywords = "", offset = 0 } = searchParams || {};
+                const newParam = { keywords, limit: 30, offset: offset + 1 }
+                const { result: { songs } } = await sendHttp(searchSong(newParam.keywords, newParam.limit, newParam.offset));
+                let allSongs = [...data, ...songs]
+                dispatch(
+                    loadSongList({
+                        list: MusicFunc.listHandler(allSongs, 'searchSong'),
+                        listType: "searchSong",
+                        songCount,
+                        searchParams: newParam
+                    })
+                )
+                break;
+            default:
+                break;
         }
-        setLoading(true);
-        getNewSongs()
-            .then((res) => res)
-            .then((body) => {
-                // 保存到redux
-                dispatch(loadSongList(MusicFunc.listHandler(body.result, 'newSong')))
-                console.log(">>>", body.result)
-                setLoading(false);
-            })
-            .catch(() => {
-                setLoading(false);
-            });
+
     };
 
     useEffect(() => {
@@ -58,8 +83,8 @@ const MusicList: React.FC = () => {
             <InfiniteScroll
                 dataLength={data.length}
                 next={loadMoreData}
-                hasMore={data.length < 10}
-                loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+                hasMore={data.length < (songCount ? songCount : 10)}
+                loader={<Spin></Spin>}
                 endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                 scrollableTarget="scrollableDiv"
             >

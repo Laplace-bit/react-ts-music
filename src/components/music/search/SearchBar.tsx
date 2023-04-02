@@ -13,13 +13,32 @@ const SearchBar: React.FC = () => {
 
     const searchHandler = async (val: string) => {
         try {
+            if (!song) {
+                window.$messageApi.open({
+                    type: 'warning',
+                    content: "请输入关键词后搜索",
+                });
+                return
+            }
             setLoading(true);
-            const { result: { songs } } = await searchSong(song);
+            const { result: { songs, songCount } } = await searchSong(song);
+            console.error(">>>>", songCount)
             if (songs.length > 0) {
                 // 重置列表
                 dispatch(resetList())
             }
-            dispatch(loadSongList(MusicFunc.listHandler(songs, 'searchSong')))
+            dispatch(
+                loadSongList({
+                    list: MusicFunc.listHandler(songs, 'searchSong'),
+                    listType: "searchSong",
+                    songCount,
+                    searchParams: {
+                        keywords: song,
+                        limit: 30,
+                        offset: 0,
+                    }
+                })
+            )
             console.log(songs);
         } catch (error) {
             console.error("catch error in SearchBar.searchHandler:", error)
@@ -34,18 +53,21 @@ const SearchBar: React.FC = () => {
     }
 
     return (
-        <Search
-            placeholder="input song name"
-            enterButton="Search"
-            size="large"
-            loading={loading}
-            style={{
-                marginBottom: '0.5rem'
-            }}
-            value={song}
-            onChange={songChange}
-            onSearch={searchHandler}
-        />
+        <div>
+            {/* {contextHolder} */}
+            <Search
+                placeholder="input song name"
+                enterButton="Search"
+                size="large"
+                loading={loading}
+                style={{
+                    marginBottom: '0.5rem'
+                }}
+                value={song}
+                onChange={songChange}
+                onSearch={searchHandler}
+            />
+        </div>
     )
 }
 

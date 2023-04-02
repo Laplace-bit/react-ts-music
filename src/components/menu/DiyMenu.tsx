@@ -6,7 +6,7 @@ import {
     VideoCameraOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-
+import "./DiyMenu.less"
 
 function DiyMenu(props: any) {
 
