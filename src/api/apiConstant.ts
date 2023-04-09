@@ -11,7 +11,8 @@
 const apiList = {
     'newSong': '/personalized/newsong',
     'songUrl': '/song/url',
-    'cloudsearch': '/cloudsearch'
+    'cloudsearch': '/cloudsearch',
+    'lyric': '/lyric'
 }
 /**
  * @description: 所有的接口列表类型
@@ -46,6 +47,12 @@ export interface apiKeyDataType {
         result: {
             songCount: number,
             songs: any,
+        }
+    },
+    'lyric': {
+        code: number,
+        lrc: {
+            lyric: string,
         }
     }
 }

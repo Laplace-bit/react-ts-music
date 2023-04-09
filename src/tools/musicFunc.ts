@@ -37,6 +37,29 @@ class MusicFunc extends CommonFunc {
         }
         return resArr;
     }
+    /**
+    * 格式化歌词
+    * @param lyric 处理音乐列表数组
+    * @returns 处理后的对象数组
+    */
+    static lyricFormat(lyric?: string): any[] {
+        if (!lyric) return [];
+
+        let lyricRes: string[];
+        const timeReg = /\[\d{2}:\d{2}\.\d{0,3}\]/g;
+        const timeList = lyric.matchAll(timeReg);
+        lyricRes = lyric.replaceAll("\n", "").split(timeReg);
+        const res: any[] = [];
+        let item = timeList.next();
+        let index = 0
+        do {
+            res.push({ time: item.value, value: lyricRes[index] })
+            index++;
+            item = timeList.next()
+        } while (!item.done);
+        return res;
+    }
+
 }
 
 export default MusicFunc;

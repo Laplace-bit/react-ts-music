@@ -20,7 +20,8 @@ export interface SongListState {
 export interface SongState {
     id: number,
     name: string,
-    singer?: string
+    singer?: string,
+    lyric?: string
 }
 
 

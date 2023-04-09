@@ -29,3 +29,12 @@ export const searchSong = async (keywords: string, limit: number = 30, offset: n
     })
 }
 
+export const getLyric = async (id: number) => {
+    return await service({
+        url: "lyric",
+        data: {
+            id,
+        }
+    })
+}
+

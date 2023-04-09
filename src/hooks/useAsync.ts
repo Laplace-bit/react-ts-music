@@ -30,6 +30,12 @@ const useAsync = <T>(userState?: State<T>) => {
 
     const sendHttp = useCallback(
         (promise: Promise<any>) => {
+            window.$messageApi.destroy();
+            window.$messageApi.open({
+                type: 'loading',
+                content: 'Action in progress..',
+                duration: 0,
+            });
             if (state.status === "end") {
                 setState({
                     data: null,
@@ -38,9 +44,15 @@ const useAsync = <T>(userState?: State<T>) => {
                 })
             }
             if (!promise || !promise.then) {
+                window.$messageApi.destroy()
+                window.$messageApi.open({
+                    type: 'warning',
+                    content: "sendHttp should be a promise",
+                });
                 throw new Error("sendHttp should be a promise")
             }
             return promise.then((data) => {
+                window.$messageApi.destroy()
                 window.$messageApi.open({
                     type: 'success',
                     content: "service success",
@@ -48,6 +60,7 @@ const useAsync = <T>(userState?: State<T>) => {
                 setData(data)
                 return Promise.resolve(data);
             }).catch((error) => {
+                window.$messageApi.destroy()
                 window.$messageApi.open({
                     type: 'error',
                     content: error,
