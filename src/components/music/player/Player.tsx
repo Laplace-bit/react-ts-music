@@ -22,13 +22,17 @@ const Player: React.FC = () => {
     const { sendHttp, isLoading, error } = useAsync()
     // 获取音乐url
     const songPlay = async (songId: number) => {
-        sendHttp(getSongUrl(songId).then((res) => res)
-            .then((body) => {
-                console.log(body)
-                const currId = body.data.find(item => item.id === songId);
-                currId && setSongUrl(currId.url);
-            })
-        )
+        try {
+            sendHttp(getSongUrl(songId).then((res) => res)
+                .then((body) => {
+                    console.log(body)
+                    const currId = body.data.find(item => item.id === songId);
+                    currId && setSongUrl(currId.url);
+                })
+            )
+        } catch (error) {
+            console.error("catch error in songPlay :", error)
+        }
     }
     // 获取音乐歌词
     const getLyricPlay = async (songId: number) => {

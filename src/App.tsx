@@ -78,7 +78,7 @@ const App: React.FC = () => {
                   }}
                 >
                   <Routes>
-                    {routesList.map((item) => <Route path={item.path} element={item.component} key={item.path} />)}
+                    {routesList.map((item) => <Route path={item.path} element={<item.component></item.component>} key={item.path} />)}
                     <Route path="*" element={<Navigate to="/" />} />
                   </Routes>
                 </Content>

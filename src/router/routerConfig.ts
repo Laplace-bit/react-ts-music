@@ -1,16 +1,19 @@
-import Home from "../components/Home";
-import Music from "../components/music/Music";
+
+import { lazy } from 'react'
+// 懒加载
+const Home = lazy(() => import("../components/Home"));
+const Music = lazy(() => import("../components/music/Music"));
 
 const routesList = [
     {
         exact: true,
         path: "/",
-        component: <Home />
+        component: Home
     },
     {
         exact: true,
         path: "music",
-        component: <Music />
+        component: Music
     },
     //   {
     //     path: "/test",
