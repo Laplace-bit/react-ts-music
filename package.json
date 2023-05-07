@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^5.0.1",
     "@babel/core": "^7.16.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@reduxjs/toolkit": "^1.9.3",
@@ -79,7 +80,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "bundle-report": "webpack-bundle-analyzer --port 4200 dist/stats.json"
   },
   "eslintConfig": {
     "extends": [
@@ -154,5 +156,12 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "compression-webpack-plugin": "^10.0.0",
+    "useless-files-w5-webpack-plugin": "^2.0.1",
+    "webpack-bundle-analyzer": "^4.8.0",
+    "webpack-merge": "^5.8.0",
+    "webpackbar": "^5.0.2"
   }
 }

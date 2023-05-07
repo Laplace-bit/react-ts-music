@@ -91,6 +91,12 @@ const hasJsxRuntime = (() => {
   }
 })();
 
+// 打包报告
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// 删除无用文件
+const UnusedFilesW5WebpackPlugin = require('useless-files-w5-webpack-plugin');
+// Gizp
+const CompressionPlugin = require('compression-webpack-plugin')
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function (webpackEnv) {
@@ -772,6 +778,32 @@ module.exports = function (webpackEnv) {
             }),
           },
         },
+      }),
+      // 打包报告-dev
+      // isEnvDevelopment
+      new BundleAnalyzerPlugin(),
+      // 删除无用文件--pro
+      new UnusedFilesW5WebpackPlugin({
+        root: ['./src'],// It can also be a string './xxxx',
+        clean: false,
+        excludeSuffix: ['.d.ts', '.js'],
+        output: './useless-files.json',
+        exclude: ['./node_modules'], // t can also be a string 'xxxx.js',
+      }),
+      new CompressionPlugin({
+        // asset: '[path].gz[query]', // 目标资源名称。[file] 会被替换成原资源。[path] 会被替换成原资源路径，[query] 替换成原查询字符串
+        // algorithm: 'gzip',
+        // // test: new RegExp('\\.(js|css)$'),
+        // test: /\.(js|css)$/,
+        // threshold: 10240, // 只处理比这个值大的资源。按字节计算, 默认为0
+        // minRatio: 0.8, // 只有压缩率比这个值小的资源才会被处理, 默认为0.8
+
+        filename: '[path][base].gz',
+        // filename: '[path].gz[query]',
+        algorithm: 'gzip',
+        test: /\.(js|css)$/,
+        threshold: 10240,
+        minRatio: 0.8,
       }),
     ].filter(Boolean),
     // Turn off performance processing because we utilize

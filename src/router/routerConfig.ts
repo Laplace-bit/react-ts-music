@@ -1,9 +1,9 @@
 
 import { lazy } from 'react'
 // 懒加载
-const Home = lazy(() => import("../components/Home"));
-const Music = lazy(() => import("../components/music/Music"));
-
+const Home = lazy(() => import("@/components/Home"));
+const Music = lazy(() => import("@/components/music/Music"));
+const Demo = lazy(() => import("@/components/demo"))
 const routesList = [
     {
         exact: true,
@@ -14,6 +14,11 @@ const routesList = [
         exact: true,
         path: "music",
         component: Music
+    },
+    {
+        exact: true,
+        path: "dev",
+        component: Demo
     },
     //   {
     //     path: "/test",
