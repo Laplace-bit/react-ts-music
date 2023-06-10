@@ -10,7 +10,7 @@ import { loadSongList } from '@/store/features/songlist-slice';
 import MusicFunc from '@/tools/musicFunc';
 import { type SongListState } from "@/store/features/types/songsType";
 import useAsync from '@/hooks/useAsync';
-
+import { Loading } from '@/components/UI';
 const MusicList: React.FC = () => {
     // 列表数据
     let data = useAppSelector((state) => state.songlist.list);
@@ -42,8 +42,10 @@ const MusicList: React.FC = () => {
                 sendHttp(
                     getNewSongs()
                         .then((body) => {
-                            // 保存到redux
-                            dispatch(loadSongList({ list: MusicFunc.listHandler(body.result, 'newSong'), listType: "newSong" }))
+                            if (body) {
+                                // 保存到redux
+                                dispatch(loadSongList({ list: MusicFunc.listHandler(body.result, 'newSong'), listType: "newSong" }))
+                            }
                         })
                 )
                 break;
@@ -84,7 +86,7 @@ const MusicList: React.FC = () => {
                 dataLength={data.length}
                 next={loadMoreData}
                 hasMore={data.length < (songCount ? songCount : 10)}
-                loader={<Spin></Spin>}
+                loader={<Loading></Loading>}
                 endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                 scrollableTarget="scrollableDiv"
             >

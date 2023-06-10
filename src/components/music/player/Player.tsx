@@ -8,6 +8,7 @@ import { songChange, setLyric } from '@/store/features/song-slice';
 import { type SongListState } from "@/store/features/types/songsType";
 import useAsync from '@/hooks/useAsync';
 import { Spin } from 'antd';
+import { Lyric } from '@/components/UI';
 
 
 const Player: React.FC = () => {
@@ -78,7 +79,7 @@ const Player: React.FC = () => {
     }, [songId]);
 
     return (
-        <div id="player" >
+        <div id="player" style={{ height: '100%', overflow: 'hidden' }} >
             <AudioPlayer
                 className='react-player'
                 muted={false}//温和
@@ -98,13 +99,15 @@ const Player: React.FC = () => {
                 }
                 footer={
                     <div>
+                        <Lyric></Lyric>
                         {lyricTimeList.map(item =>
                             <p key={item.time}>{item.value}</p>
                         )}
                     </div>
                 }
                 style={{
-                    backgroundColor: 'black'
+                    backgroundColor: 'black',
+                    height: "100%"
                 }}
             />
         </div>

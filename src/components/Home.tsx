@@ -4,6 +4,26 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 const Home: React.FC = () => {
 
+
+
+    // 加载wasm文件函数
+    function loadWebAssembly(fileName: string) {
+        return fetch(fileName)
+            .then(response => response.arrayBuffer())
+            .then(buffer => WebAssembly.compile(buffer)) // 编译
+            .then(module => WebAssembly.instantiate(module)); //创建WebAssembly实例
+    };
+    function jsfnbin(x: number): number {
+        if (x <= 1) {
+            return 1;
+        } else {
+            return jsfnbin(x - 1) + jsfnbin(x - 2);
+        }
+    }
+
+
+
+
     const continator = useRef<HTMLDivElement>(null);
 
     let model: any = useState(null);
@@ -88,6 +108,23 @@ const Home: React.FC = () => {
             init();
             loadModel();
             animate();
+
+            // wasm 位于 public 目录下
+            const WASM_PATH = '/wasm/greeting.wasm';
+            //调用加载WebAssembly函数，注意wasm文件必须要本html文件在服务器同一目录，否则可能会出现404错误src\WASM\greeting.wasm
+            loadWebAssembly(WASM_PATH).then(instance => {
+                console.time("WebAssembly")
+
+                const { fbin } = instance.exports;
+                if (typeof fbin === 'function') {
+                    console.log(fbin(30))
+                }
+                console.timeLog("WebAssembly");
+                console.time("Javascript");
+                console.log(jsfnbin(30))
+                console.timeLog("Javascript")
+            });
+
         } catch (error) {
             console.error("Home useEffect catch error:", error)
         }

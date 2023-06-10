@@ -99,8 +99,8 @@ const Demo: React.FC = () => {
         // scene.add(directionLight);
         // 点光源
         // const fillLight = new THREE.PointLight(0x88ffee, 2.7, 4, 3);
-        fillLight.position.z = 1.8;
-        fillLight.power = 1000;
+        fillLight.position.z = -3;
+        fillLight.power = 1300;
         // fillLight.position.x
         scene.add(fillLight);
 
@@ -120,14 +120,14 @@ const Demo: React.FC = () => {
         document.addEventListener('mousemove', event => {
             event.preventDefault();
             if (cursorBox.current && continator.current) {
-                cursorBox.current.style.left = event.clientX + 'px';
-                cursorBox.current.style.top = event.clientY + 'px';
+                cursorBox.current.style.left = event.clientX - 250 + 'px';
+                cursorBox.current.style.top = event.clientY * 1 - 75 + 'px';
 
                 const elapsedTime = clock.getElapsedTime();
                 const deltaTime = elapsedTime - previousTime;
-                fillLight.position.x = event.clientX / 500;
-                fillLight.position.y = event.clientY / 300;
-                console.log(fillLight.position)
+                fillLight.position.x = -event.clientX / 500;
+                fillLight.position.y = -event.clientY / 300;
+                // console.log(fillLight.position)
             }
 
         }, false);

@@ -533,6 +533,15 @@ module.exports = function (webpackEnv) {
               },
                 "less-loader",)
             },
+            {
+              test: /\.wasm$/,
+              type: 'asset/resource',
+              loader: 'file-loader',
+              options: {
+                outputPath: '/static/js',
+                name: '[name].[ext]',
+              }
+            },
             // Opt-in support for SASS (using .scss or .sass extensions).
             // By default we support SASS Modules with the
             // extensions .module.scss or .module.sass
