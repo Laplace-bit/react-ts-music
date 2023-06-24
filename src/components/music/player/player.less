@@ -1,0 +1,16 @@
+
+
+#player{
+    .player-height{
+        height: 4rem;
+    }
+    /deep/.rhap_main{
+        &:extend(.player-height);
+        .rhap_progress-section{
+            &:extend(.player-height);
+        }
+        .rhap_controls-section{
+            &:extend(.player-height);
+        }
+    }
+}

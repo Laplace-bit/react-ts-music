@@ -9,10 +9,11 @@
  * ```
  */
 const apiList = {
-    'newSong': '/personalized/newsong',
-    'songUrl': '/song/url',
-    'cloudsearch': '/cloudsearch',
-    'lyric': '/lyric'
+    'newSong': '/163api/personalized/newsong',
+    'songUrl': '/163api/song/url',
+    'cloudsearch': '/163api/cloudsearch',
+    'lyric': '/163api/lyric',
+    "login": '/nothing/users/login',
 }
 /**
  * @description: 所有的接口列表类型
@@ -54,6 +55,10 @@ export interface apiKeyDataType {
         lrc: {
             lyric: string,
         }
+    },
+    'login': {
+        errno: number,
+        msg: string,
     }
 }
 

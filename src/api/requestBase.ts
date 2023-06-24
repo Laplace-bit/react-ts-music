@@ -27,8 +27,18 @@ interface NewAxiosInstance extends AxiosInstance {
 
 //基本的初始化设置
 let http: NewAxiosInstance = axios.create({
-    baseURL: "http://localhost:3080", //因为使用的是vite构建的项目，所以这里是这么获取代理名称的，根据自己情况修改
-    timeout: 3 * 1000// 超时时间
+    // baseURL: "/nothing", //因为使用的是vite构建的项目，所以这里是这么获取代理名称的，根据自己情况修改
+    // baseURL: "http://localhost:3000", //因为使用的是vite构建的项目，所以这里是这么获取代理名称的，根据自己情况修改
+    timeout: 3 * 1000,// 超时时间
+    withCredentials: true, // 跨域
+    // headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json'
+    // }
+    // headers: {
+    //     //公共请求头配置，本项目请求头大多数接口是这个，所以这里可以配置一下，对于特殊接口单独在拦截器中配置
+    //     "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+    // }
 });
 
 // 请求拦截器

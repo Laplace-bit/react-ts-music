@@ -53,8 +53,10 @@ class MusicFunc extends CommonFunc {
         let item = timeList.next();
         let index = 0
         do {
-            res.push({ time: item.value, value: lyricRes[index] })
-            index++;
+            if (Array.isArray(item.value)) {
+                res.push({ time: item.value[0].replace("[", "").replace("]", ""), value: lyricRes[index] })
+                index++;
+            }
             item = timeList.next()
         } while (!item.done);
         return res;

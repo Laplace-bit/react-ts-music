@@ -17,6 +17,7 @@ const service = <T extends apiKeyType>(obj: AxiosRequestConfig & { url: T }) => 
         http<apiKeyDataType[T]>({
             url: apiList[obj.url],
             data: obj.data || {},
+            params: obj.params || {},
             method: obj.method || 'GET',
             responseType: obj.responseType || 'json'
         }).then(res => {

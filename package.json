@@ -39,12 +39,14 @@
     "file-loader": "^6.2.0",
     "fs-extra": "^10.0.0",
     "html-webpack-plugin": "^5.5.0",
+    "http-proxy-middleware": "^2.0.6",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.3",
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
     "less-loader": "^11.1.0",
     "mini-css-extract-plugin": "^2.4.5",
+    "moment": "^2.29.4",
     "postcss": "^8.4.4",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^6.2.1",
@@ -79,9 +81,12 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
+    "dev": "set NODE_ENV=dev && node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "bundle-report": "webpack-bundle-analyzer --port 4200 dist/stats.json"
+    "bundle-report": "webpack-bundle-analyzer --port 4200 dist/stats.json",
+    "start:dev": "cross-env REACT_APP_NODE_ENV=development node scripts/start.js",
+    "start:prod": "cross-env REACT_APP_NODE_ENV=production node scripts/start.js"
   },
   "eslintConfig": {
     "extends": [
@@ -159,6 +164,7 @@
   },
   "devDependencies": {
     "compression-webpack-plugin": "^10.0.0",
+    "cross-env": "^7.0.3",
     "useless-files-w5-webpack-plugin": "^2.0.1",
     "webpack-bundle-analyzer": "^4.8.0",
     "webpack-merge": "^5.8.0",

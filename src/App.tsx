@@ -9,9 +9,14 @@ import DiyMenu from "./components/menu/DiyMenu";
 import ErrorBoundary from "./components/Error/index";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import routesList from "./router/routerConfig"
+import Login from './components/login';
+import { useAppSelector } from './store/hooks';
+
 const { Sider, Content } = Layout;
 const App: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+
+  const loginFlag = useAppSelector((state) => state.user.loginFlag);
 
   const [messageApi, contextHolder] = message.useMessage();
   window.$messageApi = messageApi;
@@ -22,8 +27,8 @@ const App: React.FC = () => {
     { value: 'compactAlgorithm', label: '紧凑模式', theme: theme.compactAlgorithm },
   ])
 
-  const [themeValue, setThemeValue] = useState('defaultAlgorithm');
-  const [currTheme, setCurrTheme] = useState(() => theme.defaultAlgorithm);
+  const [themeValue, setThemeValue] = useState('darkAlgorithm');
+  const [currTheme, setCurrTheme] = useState(() => theme.darkAlgorithm);
 
   const changeTheme = (param: string) => {
     const theme: any = themeOptions.current.find(item => item.value === param)?.theme;
@@ -47,43 +52,53 @@ const App: React.FC = () => {
         >
           {contextHolder}
           <AntdApp>
-            <Layout>
-              <Sider trigger={null} collapsible collapsedWidth='0' collapsed={collapsed}
-                theme={themeValue === "darkAlgorithm" ? 'dark' : 'light'}
-                breakpoint='md'>
-                <div className="logo" />
-                <DiyMenu></DiyMenu>
-              </Sider>
-              <Layout className="site-layout">
-                <div className='header-box'>
-                  <Space size={20}>
-                    {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                      className: 'trigger',
-                      onClick: () => setCollapsed(!collapsed),
-                    })}
-                    <Select
-                      defaultValue='defaultAlgorithm'
-                      style={{ width: 120 }}
-                      onChange={changeTheme}
-                      options={themeOptions.current}
-                      value={themeValue}
-                    />
-                  </Space>
-                </div>
-                <Content
-                  style={{
-                    margin: '24px 16px',
-                    padding: 24,
-                    minHeight: 280,
-                  }}
-                >
+            {
+              !loginFlag ?
+                <Layout>
                   <Routes>
-                    {routesList.map((item) => <Route path={item.path} element={<item.component></item.component>} key={item.path} />)}
-                    <Route path="*" element={<Navigate to="/" />} />
+                    <Route path="*" element={<Navigate to="/login" />} />
+                    <Route path='/login' element={<Login />} />
                   </Routes>
-                </Content>
-              </Layout>
-            </Layout>
+                </Layout>
+                :
+                <Layout>
+                  <Sider trigger={null} collapsible collapsedWidth='0' collapsed={collapsed}
+                    theme={themeValue === "darkAlgorithm" ? 'dark' : 'light'}
+                    breakpoint='md'>
+                    <div className="logo" />
+                    <DiyMenu></DiyMenu>
+                  </Sider>
+                  <Layout className="site-layout">
+                    <div className='header-box'>
+                      <Space size={20}>
+                        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                          className: 'trigger',
+                          onClick: () => setCollapsed(!collapsed),
+                        })}
+                        <Select
+                          defaultValue='defaultAlgorithm'
+                          style={{ width: 120 }}
+                          onChange={changeTheme}
+                          options={themeOptions.current}
+                          value={themeValue}
+                        />
+                      </Space>
+                    </div>
+                    <Content
+                      style={{
+                        margin: '24px 16px',
+                        padding: 24,
+                        minHeight: 280,
+                      }}
+                    >
+                      <Routes>
+                        {routesList.map((item) => <Route path={item.path} element={<item.component></item.component>} key={item.path} />)}
+                        <Route path="*" element={<Navigate to="/" />} />
+                      </Routes>
+                    </Content>
+                  </Layout>
+                </Layout>
+            }
           </AntdApp>
         </ConfigProvider>
       </Router >
