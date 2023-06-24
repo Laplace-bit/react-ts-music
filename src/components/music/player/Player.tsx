@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState, type ReactInstance } from 'react'
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import './player.less'
@@ -79,16 +79,13 @@ const Player: React.FC = () => {
     }
     useEffect(() => {
         setCurrentTimeStamp(0);
+
     }, [songUrl])
 
     const listenTimeUpdate = (event: timeupdate) => {
         const second = event.timeStamp.valueOf() / 1000;
-        const f = moment(event.timeStamp.valueOf()).format('mm:ss')
-        console.log("f", f);
-
         const dur: number = (second - currentTimeStamp.valueOf());
         if (currentTimeStamp !== 0) {
-            console.log("dur", dur);
             setCurrentTime(dur);
             return
         }
@@ -127,7 +124,7 @@ const Player: React.FC = () => {
                 }
                 footer={
                     <div>
-                        <Lyric lyricList={lyricTimeList} currentTime={currentTime}></Lyric>
+                        <Lyric lyricList={lyricTimeList} currentTime={currentTime} lyricChange={Boolean(currentTimeStamp)}></Lyric>
                         {/* {lyricTimeList.map(item =>
                             <p key={item.time}>{item.value}</p>
                         )} */}
