@@ -14,6 +14,9 @@ const apiList = {
     'cloudsearch': '/163api/cloudsearch',
     'lyric': '/163api/lyric',
     "login": '/nothing/users/login',
+    'upload': '/nothing/file/upload',
+    'imagesList': '/nothing/file/imagesList',
+    'login-check': '/nothing/users/login-check',
 }
 /**
  * @description: 所有的接口列表类型
@@ -26,6 +29,9 @@ export type apiKeyType = keyof typeof apiList;
 interface songDetail {
     id: number
     url: string
+}
+export interface imagesList {
+    imgName: string
 }
 /**
  * @description: 接口对应的数据返回值类型
@@ -59,6 +65,20 @@ export interface apiKeyDataType {
     'login': {
         errno: number,
         msg: string,
+    },
+    'upload': {
+        data: string,
+        errno: number,
+        msg: string,
+    },
+    'imagesList': {
+        data: Array<imagesList>,
+        errno: number,
+        msg: string,
+    },
+    'login-check': {
+        errno: number,
+        msg: string
     }
 }
 

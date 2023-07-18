@@ -11,4 +11,11 @@ export const login = async (userName: String, password: String) => {
         }
     })
 }
+/** 登录检查 */
+export const loginCheck = async () => {
+    return await service({
+        method: "get",
+        url: "login-check",
+    })
+}
 

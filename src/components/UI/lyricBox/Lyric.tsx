@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import "./lyric.less";
 import moment from "moment"
 interface lyricInfo {
@@ -68,4 +68,4 @@ const LyricBox: React.FC<Lyric> = ({ lyricList, currentTime, lyricChange }) => {
     );
 };
 
-export default LyricBox;
+export default memo(LyricBox);

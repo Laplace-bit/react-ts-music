@@ -4,6 +4,7 @@ import {
     UploadOutlined,
     UserOutlined,
     VideoCameraOutlined,
+    FileFilled
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import "./DiyMenu.less"
@@ -40,9 +41,14 @@ function DiyMenu(props: any) {
                     label: 'music',
                 },
                 {
-                    key: '/dev',
+                    key: '/files',
+                    icon: <FileFilled />,
+                    label: 'FileSystem',
+                },
+                {
+                    key: '/3D',
                     icon: <UploadOutlined />,
-                    label: 'dev',
+                    label: '3D',
                 },
             ]}
         />

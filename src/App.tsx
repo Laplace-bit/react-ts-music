@@ -11,6 +11,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import routesList from "./router/routerConfig"
 import Login from './components/login';
 import { useAppSelector } from './store/hooks';
+import { loginCheck } from '@/api/userRequest';
+import useAsync from '@/hooks/useAsync';
+import { useAppDispatch } from '@/store/hooks';
+import { userChange } from '@/store/features/users-silce';
+import { Loading } from '@/components/UI';
 
 const { Sider, Content } = Layout;
 const App: React.FC = () => {
@@ -36,9 +41,34 @@ const App: React.FC = () => {
     setCurrTheme(() => theme);
   }
 
+  // 请求处理hook
+  const { sendHttp, isLoading } = useAsync()
+  const dispatch = useAppDispatch();
+
+  const loginCheckHandler = async () => {
+    try {
+      sendHttp(loginCheck().then((res) => {
+        console.error(res)
+        if (res.errno === 0) {
+          dispatch(userChange({ loginFlag: true }))
+        } else {
+          dispatch(userChange({ loginFlag: false }))
+        }
+        window.$messageApi.destroy()
+        window.$messageApi.open({
+          type: 'success',
+          content: res.msg,
+        });
+      })
+      )
+    } catch (error) {
+      console.error("catch error in loginCheckHandler :", error)
+    }
+  }
   useEffect(() => {
+    loginCheckHandler()
     console.log("wellcome!");
-  })
+  }, [])
 
   return (
     <ErrorBoundary>
@@ -52,6 +82,17 @@ const App: React.FC = () => {
         >
           {contextHolder}
           <AntdApp>
+            {
+              isLoading ? <div style={{
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                zIndex: '10',
+                backgroundColor: 'rgb(22 22 22 / 50%)'
+              }}>
+                <Loading></Loading>
+              </div> : null
+            }
             {
               !loginFlag ?
                 <Layout>

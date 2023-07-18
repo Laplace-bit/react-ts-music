@@ -1,4 +1,5 @@
 import "./loadingBox.css"
+import { memo } from 'react'
 const LoadingBox: React.FC = () => {
     return (
         <div className="loader">
@@ -15,7 +16,7 @@ const LoadingBox: React.FC = () => {
     );
 };
 
-export default LoadingBox;
+export default memo(LoadingBox);
 
 
 

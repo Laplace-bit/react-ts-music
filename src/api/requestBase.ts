@@ -33,7 +33,7 @@ let http: NewAxiosInstance = axios.create({
     withCredentials: true, // 跨域
     // headers: {
     //     Accept: 'application/json',
-    //     'Content-Type': 'application/json'
+    //     'Content-Type': 'multipart/form-data'
     // }
     // headers: {
     //     //公共请求头配置，本项目请求头大多数接口是这个，所以这里可以配置一下，对于特殊接口单独在拦截器中配置
@@ -45,17 +45,36 @@ let http: NewAxiosInstance = axios.create({
 const QS_METHOD: Method[] = ['POST', 'post', 'PUT', 'put'];
 const GET_METHOD: Method[] = ['GET', 'get', 'DELETE', 'delete'];
 
-http.interceptors.request.use(response => {
-    if (response.method && QS_METHOD.includes(response.method)) {// 这里只处理post请求，根据自己情况修改
-        response.data = qs.stringify(response.data);
-    } else if (response.method && GET_METHOD.includes(response.method)) {//设置GET的请求参数
-        response.params = qs.parse(response.data);
-        response.data = undefined;
+http.interceptors.request.use(request => {
+    console.error("request.data", request.data)
+    if (request.url?.includes('file')) {
+        // 将请求头 Content-Type 设置为 multipart/form-data，以确保正确处理文件上传。这是因为文件上传需要使用 multipart/form-data 编码类型，该类型可以将文件和其他表单字段数据一起发送到服务器。
+        // const headers = request.data.getHeaders();
+        // request.headers['Content-Type'] = "multipart/form-data; boundary=" + generateBoundary();
+
+        // 浏览器会自动设置Content-Type，另外应将整个formData赋值给data,无需做qs的处理！！！！！！
+        return request;
     }
-    return response;
+    if (request.method && QS_METHOD.includes(request.method)) {// 这里只处理post请求，根据自己情况修改
+        request.data = qs.stringify(request.data);
+    } else if (request.method && GET_METHOD.includes(request.method)) {//设置GET的请求参数
+        request.params = qs.parse(request.data);
+        request.data = undefined;
+    }
+
+    return request;
 }, error => {
     return error;
 });
+
+// 生成边界信息
+function generateBoundary() {
+    const timestamp = new Date().getTime();
+    const randomString = Math.random().toString(36).substring(2);
+    return `--------------------------${timestamp}${randomString}`;
+    // multipart/form-data; boundary=--------------------------16882680495162oqvkzso17i
+    // multipart/form-data; boundary=--------------------------847010267381757906638423
+}
 
 //响应拦截器
 http.interceptors.response.use(response => {

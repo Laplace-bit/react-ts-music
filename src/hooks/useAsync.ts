@@ -34,7 +34,7 @@ const useAsync = <T>(userState?: State<T>) => {
             window.$messageApi.open({
                 type: 'loading',
                 content: 'Action in progress..',
-                duration: 0,
+                // duration: 0,
             });
             if (state.status === "end") {
                 setState({
