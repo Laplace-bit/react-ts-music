@@ -50,6 +50,11 @@ function DiyMenu(props: any) {
                     icon: <UploadOutlined />,
                     label: '3D',
                 },
+                {
+                    key: '/polls',
+                    icon: <UploadOutlined />,
+                    label: 'polls',
+                },
             ]}
         />
     );

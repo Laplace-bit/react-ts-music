@@ -11,6 +11,11 @@ module.exports = function (app) {
             target: 'http://localhost:3080',
             changeOrigin: true,
             pathRewrite: { '^/163api': '' }
-        })
+        }),
+        proxy('/polls01', {
+            target: 'http://localhost:8000',
+            changeOrigin: true,
+            pathRewrite: { '^/polls01': 'polls01' }
+        }),
     )
 }

@@ -1,5 +1,5 @@
 
-// 当前播放id
+// user login state
 export interface UserState {
     loginFlag: Boolean,
 }

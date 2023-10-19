@@ -5,6 +5,8 @@ import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { upload, getImagesList } from '@/api/fileRequest';
 import { imagesList } from '@/api/apiConstant'
+import { usePointerPosition } from '@/hooks/usePointerPosition';
+import Draggable from 'react-draggable';
 const getBase64 = (file: RcFile): Promise<string> =>
     new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -20,7 +22,8 @@ const Image: React.FC = () => {
     const [fileList, setFileList] = useState<UploadFile[]>([
 
     ]);
-
+    const { x, y } = usePointerPosition()
+    console.log("x=" + x, "y=" + y)
     const handleCancel = () => setPreviewOpen(false);
 
     const handlePreview = async (file: UploadFile) => {
@@ -111,13 +114,17 @@ const Image: React.FC = () => {
             </Modal>
             {
                 imageList.map(item => (
-                    <UiImage
-                        width={200}
-                        src={'http://localhost:3300/file/images/' + item.imgName}
-                        preview={{
-                            src: 'http://localhost:3300/file/images/' + item.imgName,
-                        }}
-                    />
+                    <Draggable>
+                        <UiImage
+                            width={200}
+                            src={'http://localhost:3300/file/images/' + item.imgName}
+                            preview={{
+                                visible: false,
+                                mask: <>111</>
+                                // src: 'http://localhost:3300/file/images/' + item.imgName,
+                            }}
+                        />
+                    </Draggable>
                 ))
             }
 

@@ -4,6 +4,7 @@ import { lazy } from 'react'
 const Home = lazy(() => import("@/components/Home"));
 const Music = lazy(() => import("@/components/music/Music"));
 const Demo = lazy(() => import("@/components/demo"));
+const Polls = lazy(() => import("@/components/polls"));
 const FileSystem = lazy(() => import("@/components/fileSystem"));
 const routesList = [
     {
@@ -25,6 +26,11 @@ const routesList = [
         exact: true,
         path: "/3D",
         component: Demo
+    },
+    {
+        exact: true,
+        path: "/polls",
+        component: Polls
     },
     //   {
     //     path: "/test",

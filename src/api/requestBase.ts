@@ -37,7 +37,7 @@ let http: NewAxiosInstance = axios.create({
     // }
     // headers: {
     //     //公共请求头配置，本项目请求头大多数接口是这个，所以这里可以配置一下，对于特殊接口单独在拦截器中配置
-    //     "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+    //     "Content-Type": 'application/json; charset=utf-8',
     // }
 });
 
@@ -46,7 +46,7 @@ const QS_METHOD: Method[] = ['POST', 'post', 'PUT', 'put'];
 const GET_METHOD: Method[] = ['GET', 'get', 'DELETE', 'delete'];
 
 http.interceptors.request.use(request => {
-    console.error("request.data", request.data)
+    // console.error("request.data", request.data)
     if (request.url?.includes('file')) {
         // 将请求头 Content-Type 设置为 multipart/form-data，以确保正确处理文件上传。这是因为文件上传需要使用 multipart/form-data 编码类型，该类型可以将文件和其他表单字段数据一起发送到服务器。
         // const headers = request.data.getHeaders();

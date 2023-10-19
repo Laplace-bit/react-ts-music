@@ -17,6 +17,10 @@ const apiList = {
     'upload': '/nothing/file/upload',
     'imagesList': '/nothing/file/imagesList',
     'login-check': '/nothing/users/login-check',
+    "subjects": "/polls01/subjects/",
+    "teachers": "/polls01/teachers/",
+    "good": "/polls01/praise/",
+    "bad": "/polls01/criticize/",
 }
 /**
  * @description: 所有的接口列表类型
@@ -32,6 +36,21 @@ interface songDetail {
 }
 export interface imagesList {
     imgName: string
+}
+
+export interface subject {
+    no: number,
+    name: string,
+}
+export interface teacher {
+    no: number,
+    name: string,
+    sex: boolean,
+    birth: string,
+    intro: string,
+    photo: string,
+    good_count: number,
+    bad_count: number
 }
 /**
  * @description: 接口对应的数据返回值类型
@@ -79,6 +98,26 @@ export interface apiKeyDataType {
     'login-check': {
         errno: number,
         msg: string
+    },
+    "subjects": {
+        count: number,
+        next: null | number | string,
+        previous: string,
+        results: subject[],
+    },
+    "teachers": {
+        subject: subject
+        teachers: teacher[]
+    },
+    "good": {
+        code: number,
+        mesg: string,
+        count: number
+    },
+    "bad": {
+        code: number,
+        mesg: string,
+        count: number
     }
 }
 
