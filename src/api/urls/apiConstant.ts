@@ -13,7 +13,6 @@ const apiList = {
     'songUrl': '/163api/song/url',
     'cloudsearch': '/163api/cloudsearch',
     'lyric': '/163api/lyric',
-    "login": '/nothing/users/login',
     'upload': '/nothing/file/upload',
     'imagesList': '/nothing/file/imagesList',
     'login-check': '/nothing/users/login-check',
@@ -21,6 +20,7 @@ const apiList = {
     "teachers": "/polls01/teachers/",
     "good": "/polls01/praise/",
     "bad": "/polls01/criticize/",
+    "login": '/polls01/login/',
 }
 /**
  * @description: 所有的接口列表类型

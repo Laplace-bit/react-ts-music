@@ -4,7 +4,7 @@ import { Modal, Upload, Image as UiImage } from 'antd';
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { upload, getImagesList } from '@/api/fileRequest';
-import { imagesList } from '@/api/apiConstant'
+import { imagesList } from '@/api/urls/apiConstant'
 import { usePointerPosition } from '@/hooks/usePointerPosition';
 import Draggable from 'react-draggable';
 const getBase64 = (file: RcFile): Promise<string> =>

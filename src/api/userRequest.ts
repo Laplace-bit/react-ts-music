@@ -1,12 +1,12 @@
-import service from "./config"
+import service from "./common/service"
 
 /** 登录 */
-export const login = async (userName: String, password: String) => {
+export const login = async (username: String, password: String) => {
     return await service({
         method: "post",
         url: "login",
         data: {
-            userName,
+            username,
             password,
         }
     })

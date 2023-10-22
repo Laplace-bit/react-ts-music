@@ -1,4 +1,4 @@
-import service from "./config"
+import service from "./common/service"
 
 // 获取新音乐
 export const getNewSongs = async () => {

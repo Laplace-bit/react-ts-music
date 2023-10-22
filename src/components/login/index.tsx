@@ -1,12 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { Button, Checkbox, Form, Input, type FormInstance } from 'antd';
 import { login } from '@/api/userRequest';
 import { useAppDispatch } from '@/store/hooks';
 import { userChange } from '@/store/features/users-silce';
-interface formInfo {
-    username: string,
-    password: string,
-}
 
 
 const Login: React.FC = () => {
@@ -16,12 +12,13 @@ const Login: React.FC = () => {
     const onFinish = async (values: any) => {
         console.log('Success:', values);
         // 校验通过password
-        const { errno, msg } = await login(values.username, values.password);
-        if (errno === 0) {
-            dispatch(userChange({ loginFlag: true }))
-        } else {
-            console.error(msg)
-        }
+        const data = await login(values.username, values.password);
+        console.error(data)
+        // if (errno === 0) {
+        //     dispatch(userChange({ loginFlag: true }))
+        // } else {
+        //     console.error(msg)
+        // }
 
     };
 

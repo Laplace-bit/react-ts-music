@@ -1,5 +1,5 @@
-import http from './requestBase';
-import apiList, { apiKeyType, apiKeyDataType } from './apiConstant';
+import http from './http';
+import apiList, { apiKeyType, apiKeyDataType } from '../urls/apiConstant';
 import { AxiosRequestConfig } from 'axios';
 
 /*

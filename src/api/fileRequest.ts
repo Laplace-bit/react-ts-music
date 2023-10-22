@@ -1,4 +1,4 @@
-import service from "./config"
+import service from "./common/service"
 
 /** 文件上传 */
 export const upload = async (file: any) => {

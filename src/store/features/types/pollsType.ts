@@ -1,1 +1,1 @@
-export type { teacher, subject } from "@/api/apiConstant";
+export type { teacher, subject } from "@/api/urls/apiConstant";

@@ -1,4 +1,4 @@
-import service from "./config"
+import service from "./common/service"
 
 // 获取科目
 export const getSubjects = async () => {
