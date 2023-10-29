@@ -1,14 +1,12 @@
-import { type AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { type AxiosRequestConfig, AxiosResponse } from "axios";
 import { apiKeyType, apiKeyDataType } from '../urls/apiConstant';
 import service from "./service";
 import { cancelRequest } from "./http";
 
 export class Request {
-    private readonly axios: AxiosInstance;
     private loading: boolean;
 
-    constructor(axios: AxiosInstance) {
-        this.axios = axios;
+    constructor() {
         this.loading = false;
     }
 

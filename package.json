@@ -19,6 +19,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/three": "^0.150.1",
     "antd": "^5.2.2",
+    "antd-style": "^3.5.0",
     "antd-theme-generator": "^1.2.11",
     "axios": "^0.21.1",
     "babel-jest": "^27.4.2",

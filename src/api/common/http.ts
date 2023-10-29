@@ -29,7 +29,7 @@ interface NewAxiosInstance extends AxiosInstance {
 let http: NewAxiosInstance = axios.create({
     // baseURL: "/nothing", //因为使用的是vite构建的项目，所以这里是这么获取代理名称的，根据自己情况修改
     // baseURL: "http://localhost:3000", //因为使用的是vite构建的项目，所以这里是这么获取代理名称的，根据自己情况修改
-    timeout: 3 * 1000,// 超时时间
+    timeout: 30 * 1000,// 超时时间
     withCredentials: true, // 跨域
     // headers: {
     //     Accept: 'application/json',

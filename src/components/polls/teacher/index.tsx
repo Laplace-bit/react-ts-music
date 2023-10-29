@@ -18,13 +18,11 @@ const Teacher: React.FC<props> = (props) => {
     // get teachers 列表数据
     let list = useAppSelector((state) => state.polls.teachers);
 
-    /**  */
+    /** 点赞或差评 */
     async function handleLikeOrDislike(no: number, action: string) {
-        console.log(no, action)
-        const { code, count } = await commitComment(no, action);
-        if (code === 20000) {
-            dispatch(updateTeacherCount({ no, flag: action, count }))
-            console.error({ no, flag: action, count })
+        const { header, body } = await commitComment(no, action);
+        if (header?.code === "0000") {
+            dispatch(updateTeacherCount({ no, flag: action, count: body.count }))
         }
     }
 

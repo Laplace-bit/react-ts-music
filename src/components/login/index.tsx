@@ -3,23 +3,24 @@ import { Button, Checkbox, Form, Input, type FormInstance } from 'antd';
 import { login } from '@/api/userRequest';
 import { useAppDispatch } from '@/store/hooks';
 import { userChange } from '@/store/features/users-silce';
-
+import useRequestSync from '@/hooks/useRequestSync';
+import CommonFunc from '@/tools/commonFunc';
 
 const Login: React.FC = () => {
 
     const dispatch = useAppDispatch();
+    const { sendHttp } = useRequestSync()
     const formRef = React.useRef<FormInstance>(null);
     const onFinish = async (values: any) => {
-        console.log('Success:', values);
         // 校验通过password
-        const data = await login(values.username, values.password);
-        console.error(data)
-        // if (errno === 0) {
-        //     dispatch(userChange({ loginFlag: true }))
-        // } else {
-        //     console.error(msg)
-        // }
-
+        const { header, body } = await sendHttp(login(values.username, values.password));
+        if (header.code === "0000") {
+            dispatch(userChange({ loginFlag: true }))
+            CommonFunc.toggleMsg("success", body.msg)
+        } else {
+            dispatch(userChange({ loginFlag: false }))
+            CommonFunc.toggleMsg("error", body.msg)
+        }
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -35,11 +36,10 @@ const Login: React.FC = () => {
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
                 style={{ maxWidth: 600 }}
-                initialValues={{ username: 'laoshi', password: '123' }}
+                initialValues={{ username: 'admin', password: '123' }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
-
             >
                 <Form.Item
                     label="Username"

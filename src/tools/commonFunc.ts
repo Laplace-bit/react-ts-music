@@ -25,5 +25,13 @@ export default class CommonFunc {
     return Array.from(map.values());
   }
 
+  static toggleMsg(type: string, content: string) {
+    window.$messageApi.destroy()
+    window.$messageApi.open({
+      type,
+      content,
+    });
+  }
+
 
 }

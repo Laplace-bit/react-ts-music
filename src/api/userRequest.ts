@@ -1,8 +1,9 @@
-import service from "./common/service"
+import { Request } from "./common/requestBase"
 
 /** 登录 */
 export const login = async (username: String, password: String) => {
-    return await service({
+    const request = new Request()
+    return await request.request({
         method: "post",
         url: "login",
         data: {
@@ -13,7 +14,8 @@ export const login = async (username: String, password: String) => {
 }
 /** 登录检查 */
 export const loginCheck = async () => {
-    return await service({
+    const request = new Request()
+    return await request.request({
         method: "get",
         url: "login-check",
     })

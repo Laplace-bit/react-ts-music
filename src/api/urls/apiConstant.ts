@@ -1,4 +1,4 @@
-
+import { CommentResponse, CommonResponse } from "@/api/types/polls"
 /**
  * @description: 所有的接口列表
  * @param {*} 无参数
@@ -52,6 +52,7 @@ export interface teacher {
     good_count: number,
     bad_count: number
 }
+
 /**
  * @description: 接口对应的数据返回值类型
  * @param {*} 无参数
@@ -81,10 +82,7 @@ export interface apiKeyDataType {
             lyric: string,
         }
     },
-    'login': {
-        errno: number,
-        msg: string,
-    },
+    'login': CommonResponse,
     'upload': {
         data: string,
         errno: number,
@@ -109,16 +107,8 @@ export interface apiKeyDataType {
         subject: subject
         teachers: teacher[]
     },
-    "good": {
-        code: number,
-        mesg: string,
-        count: number
-    },
-    "bad": {
-        code: number,
-        mesg: string,
-        count: number
-    }
+    "good": CommentResponse,
+    "bad": CommentResponse
 }
 
 export default apiList;
