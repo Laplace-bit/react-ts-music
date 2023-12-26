@@ -5,8 +5,10 @@ import { type subject } from "@/api/urls/apiConstant";
 import Teacher from './teacher';
 import { useAppDispatch } from '@/store/hooks';
 import { updateTeachersList } from '@/store/features/polls-slice';
+import withLog from '../HOC/withLog';
 
 const Polls: React.FC = () => {
+    const TeacherLog = withLog(Teacher)
     const [subjects, setSubjects] = useState<Array<subject>>([])
     const [openState, setOpenState] = useState(false);
     const [title, setTitle] = useState<string | undefined>("");
@@ -45,7 +47,7 @@ const Polls: React.FC = () => {
                     </List.Item>
                 )}
             />
-            <Teacher openState={openState} setOpenState={setOpenState} title={title}></Teacher>
+            <TeacherLog openState={openState} setOpenState={setOpenState} title={title}></TeacherLog>
         </div>
     );
 };

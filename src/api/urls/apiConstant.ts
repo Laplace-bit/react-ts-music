@@ -1,4 +1,4 @@
-import { CommentResponse, CommonResponse } from "@/api/types/polls"
+import { CommentResponse, CommonResponse, SendSmsCodeResponse } from "@/api/types/polls"
 /**
  * @description: 所有的接口列表
  * @param {*} 无参数
@@ -21,6 +21,7 @@ const apiList = {
     "good": "/polls01/praise/",
     "bad": "/polls01/criticize/",
     "login": '/polls01/login/',
+    "sendSmsCode": '/polls01/send_mobile_code/'
 }
 /**
  * @description: 所有的接口列表类型
@@ -108,7 +109,8 @@ export interface apiKeyDataType {
         teachers: teacher[]
     },
     "good": CommentResponse,
-    "bad": CommentResponse
+    "bad": CommentResponse,
+    "sendSmsCode": SendSmsCodeResponse
 }
 
 export default apiList;

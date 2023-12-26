@@ -10,8 +10,9 @@ import { store } from "./store/store";
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
+
 root.render(
-    <React.Suspense>
+    <React.Suspense fallback={<div className="suspense-box" style={{ backgroundColor: 'black', width: '100', height: '100vh' }}>loading...</div>}>
         <Provider store={store}>
             <App />
         </Provider>
