@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ant-design/icons": "^5.0.1",
+    "@ant-design/icons": "5.0.1",
     "@babel/core": "^7.16.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@reduxjs/toolkit": "^1.9.3",
@@ -18,9 +18,9 @@
     "@types/react-dom": "^18.0.11",
     "@types/react-router-dom": "^5.3.3",
     "@types/three": "^0.150.1",
-    "antd": "^5.2.2",
-    "antd-style": "^3.5.0",
-    "antd-theme-generator": "^1.2.11",
+    "antd": "5.2.2",
+    "antd-style": "3.5.0",
+    "antd-theme-generator": "1.2.11",
     "axios": "^0.21.1",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
@@ -66,6 +66,7 @@
     "react-redux": "^8.0.5",
     "react-refresh": "^0.11.0",
     "react-router-dom": "^6.8.1",
+    "react-virtualized": "^9.22.5",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^13.2.0",
@@ -166,6 +167,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-virtualized": "^9.21.29",
     "compression-webpack-plugin": "^10.0.0",
     "cross-env": "^7.0.3",
     "useless-files-w5-webpack-plugin": "^2.0.1",

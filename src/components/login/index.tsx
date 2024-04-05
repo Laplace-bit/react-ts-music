@@ -1,13 +1,24 @@
-import React, { useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Checkbox, Form, Input, type FormInstance } from 'antd';
 import { login } from '@/api/userRequest';
-import { useAppDispatch } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { userChange } from '@/store/features/users-silce';
 import useRequestSync from '@/hooks/useRequestSync';
 import CommonFunc from '@/tools/commonFunc';
 import SmsCode from '@/components/funComponents/SmsCode';
+import { setCookie } from '@/tools/cookieUtils';
+import { redirect, useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
+
+    const loginFlag = useAppSelector((state) => state.user.loginFlag);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (loginFlag) {
+            navigate('/');
+            console.log('重定向')
+        }
+    }, [loginFlag, navigate])
     const dispatch = useAppDispatch();
     const { sendHttp } = useRequestSync()
     const formRef = React.useRef<FormInstance>(null);
@@ -19,6 +30,7 @@ const Login: React.FC = () => {
             if (header.code === "0000") {
                 dispatch(userChange({ loginFlag: true }))
                 CommonFunc.toggleMsg("success", body.msg)
+                redirect('/home')
             } else {
                 dispatch(userChange({ loginFlag: false }))
                 CommonFunc.toggleMsg("error", body.msg)
@@ -34,7 +46,7 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div style={{ height: '100%', width: '100%', display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+        <div style={{ height: '100%', width: '100%', display: 'flex', justifyContent: "center", alignItems: 'center', backgroundColor: 'black' }}>
             <Form
                 form={form}
                 name="basic"

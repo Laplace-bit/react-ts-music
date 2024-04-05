@@ -1,16 +1,18 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined, WifiOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Layout, theme, Select, ConfigProvider, Space, App as AntdApp, message } from 'antd';
 import "./global.css"
 import DiyMenu from "./components/menu/DiyMenu";
 import ErrorBoundary from "./components/Error/index";
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import routesList from "./router/routerConfig"
-import Login from './components/login';
+import { BrowserRouter as Router, useNavigate, RouterProvider, Outlet } from 'react-router-dom';
+import router from "./router"
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { ModalProvider, Modal } from './components/provider/ModalProvider';
 import useOnlineStatus from './hooks/useOnlineStatus';
 import { themeChange } from './store/features/setting-silce';
+import { getCookie } from './tools/cookieUtils';
+import { loginCheck } from './api/userRequest';
+import { userChange } from '@/store/features/users-silce';
 
 const { Sider, Content } = Layout;
 const App: React.FC = () => {
@@ -40,71 +42,59 @@ const App: React.FC = () => {
 
   return (
     <ErrorBoundary>
-      <Router>
-        <ConfigProvider direction="ltr" theme={{
-          algorithm: currTheme,
-          token: {
-            colorPrimary: '#00b96b',
-          },
-        }}
-        >
-          {contextHolder}
-          <AntdApp>
-            <ModalProvider>
-              <Modal></Modal>
-              {
-                !loginFlag ?
-                  <Layout>
-                    <Routes>
-                      <Route path="*" element={<Navigate to="/login" />} />
-                      <Route path='/login' element={<Login />} />
-                    </Routes>
-
-                  </Layout>
-                  :
-                  <Layout>
-                    <Sider trigger={null} collapsible collapsedWidth='0' collapsed={collapsed}
-                      theme={themeValue === "darkAlgorithm" ? 'dark' : 'light'}
-                      breakpoint='md'>
-                      <div className="logo" />
-                      <DiyMenu></DiyMenu>
-                    </Sider>
-                    <Layout className="site-layout">
-                      <div className='header-box'>
-                        <Space size={20}>
-                          {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                            className: 'trigger',
-                            onClick: () => setCollapsed(!collapsed),
-                          })}
-                          <Select
-                            defaultValue='defaultAlgorithm'
-                            style={{ width: 120 }}
-                            onChange={changeTheme}
-                            options={themeOptions}
-                            value={themeValue}
-                          />
-                          {isOnline ? <WifiOutlined /> : <LoadingOutlined />}
-                        </Space>
-                      </div>
-                      <Content
-                        style={{
-                          margin: '24px 16px',
-                          padding: 24,
-                          minHeight: 280,
-                        }}
-                      >
-                        <Routes>
-                          {routesList.map((item) => <Route path={item.path} element={<item.component></item.component>} key={item.path} />)}
-                          <Route path="*" element={<Navigate to="/" />} />
-                        </Routes>
-                      </Content>
-                    </Layout>
-                  </Layout>
+      {/* <Router> */}
+      <ConfigProvider direction="ltr" theme={{
+        algorithm: currTheme,
+        token: {
+          colorPrimary: '#00b96b',
+        },
+      }}
+      >
+        {contextHolder}
+        <AntdApp>
+          <ModalProvider>
+            <Modal></Modal>
+            {/* <Layout>
+              {loginFlag ?
+                <Sider trigger={null} collapsible collapsedWidth='0' collapsed={collapsed}
+                  theme={themeValue === "darkAlgorithm" ? 'dark' : 'light'}
+                  breakpoint='md'>
+                  <div className="logo" />
+                  <DiyMenu></DiyMenu>
+                </Sider> : ''
               }
-            </ModalProvider>
-          </AntdApp>
-        </ConfigProvider>
-      </Router >
+              <Layout className="site-layout">
+                <div className='header-box'>
+                  <Space size={20}>
+                    {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                      className: 'trigger',
+                      onClick: () => setCollapsed(!collapsed),
+                    })}
+                    <Select
+                      defaultValue='defaultAlgorithm'
+                      style={{ width: 120 }}
+                      onChange={changeTheme}
+                      options={themeOptions}
+                      value={themeValue}
+                    />
+                    {isOnline ? <WifiOutlined /> : <LoadingOutlined />}
+                  </Space>
+                </div>
+                <Content
+                  style={{
+                    margin: '24px 16px',
+                    padding: 24,
+                    minHeight: 280,
+                  }}
+                >
+                </Content>
+                </Layout>
+              </Layout> */}
+            <RouterProvider router={router} />
+          </ModalProvider>
+        </AntdApp>
+      </ConfigProvider>
+      {/* </Router > */}
     </ErrorBoundary>
   );
 };
