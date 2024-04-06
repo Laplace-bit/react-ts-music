@@ -41,12 +41,4 @@ const router = createBrowserRouter([
 ]);
 
 
-// const RootRoute: React.FC = () => {
-//     return (
-//         <RouterProvider router={router} />
-//     )
-// }
-
-
-
 export default router

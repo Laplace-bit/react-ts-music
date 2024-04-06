@@ -6,7 +6,6 @@ import { userChange } from '@/store/features/users-silce';
 import useRequestSync from '@/hooks/useRequestSync';
 import CommonFunc from '@/tools/commonFunc';
 import SmsCode from '@/components/funComponents/SmsCode';
-import { setCookie } from '@/tools/cookieUtils';
 import { redirect, useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
