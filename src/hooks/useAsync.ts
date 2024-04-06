@@ -12,21 +12,6 @@ const initialState: State<null> = {
 
 const useAsync = <T>(userState?: State<T>) => {
     const [state, setState] = useState<State<T>>({ ...initialState, ...userState });
-    const setData = (data: T) => {
-        setState({
-            data,
-            error: null,
-            status: "end"
-        })
-    }
-
-    const setError = (error: any) => {
-        setState({
-            data: null,
-            error: error,
-            status: "end"
-        })
-    }
 
     const sendHttp = useCallback(
         (promise: Promise<any>) => {
@@ -57,7 +42,11 @@ const useAsync = <T>(userState?: State<T>) => {
                     type: 'success',
                     content: "service success",
                 });
-                setData(data)
+                setState({
+                    data,
+                    error: null,
+                    status: "end"
+                })
                 return Promise.resolve(data);
             }).catch((error) => {
                 window.$messageApi.destroy()
@@ -65,18 +54,20 @@ const useAsync = <T>(userState?: State<T>) => {
                     type: 'error',
                     content: error,
                 });
-                setError(error);
+                setState({
+                    data: null,
+                    error: error,
+                    status: "end"
+                })
                 return Promise.reject(error);
             })
         },
         [state]
     );
-
+    console.error("sendHttp", state)
     return {
         isLoading: state.status !== "end",
         error: state.error,
-        setData,
-        setError,
         sendHttp,
     }
 }

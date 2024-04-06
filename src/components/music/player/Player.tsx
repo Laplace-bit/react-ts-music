@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, type ReactInstance } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import './player.less'
@@ -7,10 +7,8 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import MusicFunc from '@/tools/musicFunc';
 import { songChange, setLyric } from '@/store/features/song-slice';
 import { type SongListState } from "@/store/features/types/songsType";
-import useAsync from '@/hooks/useAsync';
 import { Spin } from 'antd';
 import { Lyric } from '@/components/UI';
-import moment from "moment"
 
 
 const Player: React.FC = () => {
@@ -21,31 +19,28 @@ const Player: React.FC = () => {
 
 
 
-    // 请求处理hook
-    const { sendHttp, isLoading } = useAsync()
+    const [isLoading, setIsLoading] = useState(false)
     // 获取音乐url
     const songPlay = async (songId: number) => {
         try {
-            sendHttp(getSongUrl(songId).then((res) => res)
-                .then((body) => {
-                    if (body && body.data && Array.isArray(body.data)) {
-                        const currId = body.data.find(item => item.id === songId);
-                        currId && setSongUrl(currId.url);
-                    }
-                })
-            )
+            setIsLoading(true)
+            const res = await getSongUrl(songId)
+            if (res && res.data && Array.isArray(res.data)) {
+                const currId = res.data.find(item => item.id === songId);
+                currId && setSongUrl(currId.url);
+            }
         } catch (error) {
             console.error("catch error in songPlay :", error)
+        } finally {
+            setIsLoading(false)
         }
     }
     // 获取音乐歌词
     const getLyricPlay = async (songId: number) => {
-        sendHttp(getLyric(songId).then((res) => res)
-            .then((body) => {
-                // console.log("getLyricPlay", body)
-                dispatch(setLyric({ lyric: body?.lrc?.lyric }))
-            })
-        )
+        setIsLoading(true)
+        const res = await getLyric(songId)
+        dispatch(setLyric({ lyric: res?.lrc?.lyric }))
+        setIsLoading(false)
     }
     // 下一首
     const songList = useAppSelector((state) => state.songlist.list);
@@ -82,16 +77,18 @@ const Player: React.FC = () => {
 
     }, [songUrl])
 
-    const listenTimeUpdate = (event: timeupdate) => {
-        const second = event.timeStamp.valueOf() / 1000;
-        const dur: number = (second - currentTimeStamp.valueOf());
-        if (currentTimeStamp !== 0) {
-            setCurrentTime(dur);
-            return
-        }
-        setCurrentTimeStamp(second);
+    const listenTimeUpdate = useCallback(
+        (event: timeupdate) => {
+            const second = event.timeStamp.valueOf() / 1000;
+            const dur: number = (second - currentTimeStamp.valueOf());
+            if (currentTimeStamp !== 0) {
+                setCurrentTime(dur);
+                return
+            }
+            setCurrentTimeStamp(second);
 
-    }
+        }, []
+    )
 
     const lyric = useAppSelector((state) => state.song.lyric);
     const lyricTimeList = MusicFunc.lyricFormat(lyric);
@@ -139,4 +136,4 @@ const Player: React.FC = () => {
     );
 };
 
-export default Player;
+export default React.memo(Player);

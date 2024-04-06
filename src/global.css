@@ -32,6 +32,12 @@ code {
     monospace;
 }
 
-#root ,.ant-layout ,.ant-app {
+#root,
+.ant-layout,
+.ant-app {
   height: 100%;
+}
+
+li {
+  list-style: none;
 }

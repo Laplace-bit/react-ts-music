@@ -16,8 +16,8 @@ export const login = async (username: String, password: String) => {
 export const loginCheck = async () => {
     const request = new Request()
     return await request.request({
-        method: "get",
-        url: "login-check",
+        method: "post",
+        url: "loginCheck",
     })
 }
 
