@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { type ThemeState } from "./types/setting"
 
 const initialTheme: ThemeState = {
-    value: 'darkAlgorithm',
+    value: 'darkAlgorithm'
 }
 
 const themeSlice = createSlice({

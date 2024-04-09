@@ -1,42 +1,62 @@
-import { Layout, Select, Space } from "antd";
+import { Layout, Select, Space, theme } from "antd";
 import Sider from "antd/es/layout/Sider";
 import DiyMenu from "../menu/DiyMenu";
-import React from "react";
-import { LoadingOutlined, WifiOutlined } from "@ant-design/icons";
+import React, { useContext, useState } from "react";
 import { Content } from "antd/es/layout/layout";
-import { Outlet, RouterProvider } from "react-router-dom";
-
+import { Outlet } from "react-router-dom";
+import { MenuFoldOutlined, MenuUnfoldOutlined, WifiOutlined, LoadingOutlined } from '@ant-design/icons';
+import { ThemeContext } from "@/App";
+import { themeChange } from "@/store/features/setting-silce";
+import useOnlineStatus from "@/hooks/useOnlineStatus";
+import { useAppDispatch } from "@/store/hooks";
+import { themeList } from "@/constant/setting";
 
 
 const Root: React.FC = () => {
+    const { themeValue, setThemeValue } = useContext(ThemeContext);
+
+    const dispatch = useAppDispatch();
+
+    const changeTheme = (param: string) => {
+        const { value } = themeList.find(item => item.value === param) || { theme: theme.darkAlgorithm, value: 'darkAlgorithm' }
+        setThemeValue(() => {
+            dispatch(themeChange({ value }))
+            return value
+        })
+    }
+
+    const [collapsed, setCollapsed] = useState(false);
+
+    // 检查网络状态
+    const isOnline = useOnlineStatus();
+
     return (
         <Layout>
             {
                 <Sider trigger={null} collapsible collapsedWidth='0'
-                    // collapsed={collapsed}
-                    // theme={themeValue === "darkAlgorithm" ? 'dark' : 'light'}
+                    collapsed={collapsed}
+                    theme={themeValue === "darkAlgorithm" ? 'dark' : 'light'}
                     breakpoint='md'>
                     <div className="logo" />
                     <DiyMenu></DiyMenu>
                 </Sider>
             }
-            {/* 侧边栏 */}
             <Layout className="site-layout">
                 <div className='header-box'>
-                    {/* <Space size={20}>
+                    <Space size={20}>
                         {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                             className: 'trigger',
                             onClick: () => setCollapsed(!collapsed),
                         })}
                         <Select
-                            defaultValue='defaultAlgorithm'
+                            defaultValue='darkAlgorithm'
                             style={{ width: 120 }}
                             onChange={changeTheme}
-                            options={themeOptions}
+                            options={themeList}
                             value={themeValue}
                         />
                         {isOnline ? <WifiOutlined /> : <LoadingOutlined />}
-                    </Space> */}
+                    </Space>
                 </div>
                 <Content
                     style={{
@@ -45,8 +65,8 @@ const Root: React.FC = () => {
                         minHeight: 280,
                     }}
                 >
+                    {/* 路由渲染 */}
                     <Outlet />
-
                 </Content>
             </Layout>
         </Layout>)

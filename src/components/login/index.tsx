@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Button, Checkbox, Form, Input, type FormInstance } from 'antd';
 import { login } from '@/api/userRequest';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -22,7 +22,7 @@ const Login: React.FC = () => {
     const { sendHttp } = useRequestSync()
     const formRef = React.useRef<FormInstance>(null);
     const [form] = Form.useForm();
-    const onFinish = async (values: any) => {
+    const onFinish = useCallback(async (values: any) => {
         try {
             // 校验通过password
             const { header, body } = await sendHttp(login(values.username, values.password));
@@ -37,7 +37,7 @@ const Login: React.FC = () => {
         } catch (error) {
             console.error(error)
         }
-    };
+    }, [dispatch, sendHttp]);
 
     const onFinishFailed = (errorInfo: any) => {
         formRef.current?.setFieldsValue({ username: 'Hi, man!' });

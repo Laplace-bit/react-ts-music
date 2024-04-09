@@ -36,12 +36,12 @@ const Player: React.FC = () => {
         }
     }
     // 获取音乐歌词
-    const getLyricPlay = async (songId: number) => {
+    const getLyricPlay = useCallback(async (songId: number) => {
         setIsLoading(true)
         const res = await getLyric(songId)
         dispatch(setLyric({ lyric: res?.lrc?.lyric }))
         setIsLoading(false)
-    }
+    }, [dispatch])
     // 下一首
     const songList = useAppSelector((state) => state.songlist.list);
     const data = MusicFunc.uniqueObjectArray(songList, "id");
@@ -87,7 +87,7 @@ const Player: React.FC = () => {
             }
             setCurrentTimeStamp(second);
 
-        }, []
+        }, [currentTimeStamp]
     )
 
     const lyric = useAppSelector((state) => state.song.lyric);
@@ -97,7 +97,7 @@ const Player: React.FC = () => {
             songPlay(songId);
             getLyricPlay(songId)
         }
-    }, [songId]);
+    }, [getLyricPlay, songId]);
 
     return (
         <div id="player" style={{ height: '100%', overflow: 'hidden' }} >
