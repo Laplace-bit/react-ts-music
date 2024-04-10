@@ -6,23 +6,16 @@ import { Content } from "antd/es/layout/layout";
 import { Outlet } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined, WifiOutlined, LoadingOutlined } from '@ant-design/icons';
 import { ThemeContext } from "@/App";
-import { themeChange } from "@/store/features/setting-silce";
 import useOnlineStatus from "@/hooks/useOnlineStatus";
-import { useAppDispatch } from "@/store/hooks";
 import { themeList } from "@/constant/setting";
 
 
 const Root: React.FC = () => {
     const { themeValue, setThemeValue } = useContext(ThemeContext);
 
-    const dispatch = useAppDispatch();
-
     const changeTheme = (param: string) => {
         const { value } = themeList.find(item => item.value === param) || { theme: theme.darkAlgorithm, value: 'darkAlgorithm' }
-        setThemeValue(() => {
-            dispatch(themeChange({ value }))
-            return value
-        })
+        setThemeValue(value)
     }
 
     const [collapsed, setCollapsed] = useState(false);
