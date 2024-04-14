@@ -1,4 +1,3 @@
-import React from 'react';
 import { Menu } from 'antd';
 import {
     UploadOutlined,
@@ -54,6 +53,11 @@ function DiyMenu(props: any) {
                     key: '/polls',
                     icon: <UploadOutlined />,
                     label: 'polls',
+                },
+                {
+                    key: '/EnglishClub',
+                    icon: <UploadOutlined />,
+                    label: 'EnglishClub',
                 },
             ]}
         />

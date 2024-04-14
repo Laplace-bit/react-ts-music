@@ -66,13 +66,13 @@ http.interceptors.request.use(request => {
 });
 
 // 生成边界信息
-function generateBoundary() {
-    const timestamp = new Date().getTime();
-    const randomString = Math.random().toString(36).substring(2);
-    return `--------------------------${timestamp}${randomString}`;
-    // multipart/form-data; boundary=--------------------------16882680495162oqvkzso17i
-    // multipart/form-data; boundary=--------------------------847010267381757906638423
-}
+// function generateBoundary() {
+//     const timestamp = new Date().getTime();
+//     const randomString = Math.random().toString(36).substring(2);
+//     return `--------------------------${timestamp}${randomString}`;
+//     // multipart/form-data; boundary=--------------------------16882680495162oqvkzso17i
+//     // multipart/form-data; boundary=--------------------------847010267381757906638423
+// }
 
 //响应拦截器
 http.interceptors.response.use(response => {

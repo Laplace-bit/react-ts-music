@@ -177,6 +177,8 @@
     "@types/react-virtualized": "^9.21.29",
     "compression-webpack-plugin": "^10.0.0",
     "cross-env": "^7.0.3",
+    "speed-measure-webpack-plugin": "^1.5.0",
+    "thread-loader": "^4.0.2",
     "useless-files-w5-webpack-plugin": "^2.0.1",
     "webpack-bundle-analyzer": "^4.8.0",
     "webpack-merge": "^5.8.0",

@@ -51,7 +51,7 @@ const Demo: React.FC = () => {
         modelBox?.current?.addEventListener('mousemove', handleCursorMove, true);
     }, [handleCursorMove])
 
-    const loadModel = useCallback(() => {
+    const loadModel = () => {
         // 初始化加载管理器
         const loadingManager = new LoadingManager();
         // 此函数在加载开始时被调用
@@ -88,7 +88,12 @@ const Demo: React.FC = () => {
                 console.log('An error happened', error);
             }
         );
-    }, [addCursor, renderer.renderLists, scene])
+        return () => {
+            scene.remove(model.current);
+            scene.clear()
+            renderer.dispose()
+        }
+    }
 
     const onWindowResize = useCallback(() => {
         camera.aspect = 1.5;
@@ -132,11 +137,15 @@ const Demo: React.FC = () => {
     const animate = useCallback(() => {
         setTimeout(() => {
             // model.rotation.x += 0.01;
-            model.current.rotation.y += 0.01;
+            model.current.rotation && (model.current.rotation.y += 0.01);
             // model.rotation.z += 0.01;
         }, 1000)
-        requestAnimationFrame(animate);
+        const id = requestAnimationFrame(animate);
         renderer.render(scene, camera);
+        return () => {
+            cancelAnimationFrame(id)
+            renderer.clear()
+        }
     }, [camera, scene, renderer])
 
 
@@ -145,17 +154,19 @@ const Demo: React.FC = () => {
         try {
             console.error("init!!!!!!!!!!!")
             init();
-            loadModel();
-            animate();
+            const removeModel = loadModel();
+            const rendererClear = animate();
             const temp = modelBox?.current
             return () => {
                 temp?.removeEventListener('mousemove', handleCursorMove);
                 window.removeEventListener('resize', onWindowResize);
+                removeModel()
+                rendererClear()
             }
         } catch (error) {
             console.error("Home useEffect catch error:", error)
         }
-    }, [init, loadModel, animate, handleCursorMove, onWindowResize])
+    }, [])
 
     return (
         <div id='modelBox' ref={modelBox}>

@@ -30,7 +30,7 @@ const pollsSlice = createSlice({
             state.teachers = actions.payload.teachers;
         },
         updateTeacherCount(state, actions: PayloadAction<UpdateParams>) {
-            state.teachers.map(item => {
+            state.teachers.forEach(item => {
                 if (item.no === actions.payload.no) {
                     if (actions.payload.flag === "good") {
                         item.good_count = actions.payload.count;

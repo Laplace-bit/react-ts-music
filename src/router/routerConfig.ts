@@ -5,6 +5,7 @@ const Music = lazy(() => import("@/components/music/Music"));
 const Demo = lazy(() => import("@/components/demo"));
 const Polls = lazy(() => import("@/components/polls"));
 const FileSystem = lazy(() => import("@/components/fileSystem"));
+const EnglishClub = lazy(() => import("@/components/EnglishClub"));
 
 
 const routesList = [
@@ -32,6 +33,11 @@ const routesList = [
         exact: true,
         path: "polls",
         component: Polls,
+    },
+    {
+        exact: true,
+        path: "EnglishClub",
+        component: EnglishClub,
     },
     //   {
     //     path: "/test",

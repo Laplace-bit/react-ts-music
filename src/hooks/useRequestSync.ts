@@ -16,13 +16,13 @@ const initialState: State<null> = {
 const useRequestSync = <T>(userState?: State<T>) => {
     const [state, setState] = useState<State<T>>({ ...initialState, ...userState });
     const { closeModal, openModal } = useContext(ModalContext);
-    const setData = (data: T) => {
+    const setData = useCallback((data: T) => {
         setState({
             data,
             error: null,
             status: "end"
         })
-    }
+    }, [])
 
     const setError = (error: any) => {
         setState({
@@ -57,7 +57,7 @@ const useRequestSync = <T>(userState?: State<T>) => {
                 return Promise.reject(error);
             })
         },
-        [state]
+        [state, closeModal, openModal, setData]
     );
 
     return {

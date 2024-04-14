@@ -1,4 +1,4 @@
-import React, { useRef, useState, lazy } from 'react';
+import React, { lazy } from 'react';
 
 import { Tabs, type TabsProps } from 'antd';
 import { useAppDispatch } from '@/store/hooks';

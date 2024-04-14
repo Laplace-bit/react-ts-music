@@ -11,7 +11,7 @@ const loader = async () => {
         return ''
     }
     isChecked = true
-    const { header } = await loginCheck();
+    const { header } = await loginCheck() || {};
     if (header?.code === '0000') {
         return redirect('/home')
     } else {
